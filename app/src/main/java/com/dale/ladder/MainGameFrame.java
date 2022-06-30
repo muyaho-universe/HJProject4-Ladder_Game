@@ -7,11 +7,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import com.dale.ladder.data.MyData;
+
 public class MainGameFrame extends JFrame {
 	private static final String TITLE = "사다리 타기";
 	
 	private FirstInputPanel firstInputPanel;
-	
+	private SetComponent setComponentPanel;
 	public static void main(String[] args) {
 		MainGameFrame mainFrame = new MainGameFrame();
 		mainFrame.run();
@@ -19,6 +21,7 @@ public class MainGameFrame extends JFrame {
 	
 	MainGameFrame(){
 		firstInputPanel = new FirstInputPanel();
+		setComponentPanel = new SetComponent();
 		setSize(1080, 504);
 		setTitle(TITLE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -28,14 +31,20 @@ public class MainGameFrame extends JFrame {
 	private void run() {
 		this.setVisible(true);
 		
-		
+		firstInputPanel.getGoToNext().addActionListener(new ToSetComponetPanel());
 		this.add(firstInputPanel);
 	}
 	
 	class ToSetComponetPanel implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			setComponentPanel.createPanel();
+			MainGameFrame.this.firstInputPanel.getNumberOfPeople().setText("");
+			MainGameFrame.this.firstInputPanel.getNumberOfBranch().setText("");
+			MainGameFrame.this.getContentPane().removeAll();
+			MainGameFrame.this.getContentPane().add(setComponentPanel);
+			revalidate();
+			repaint();
 		}
 	}
 }

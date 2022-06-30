@@ -114,4 +114,12 @@ public class FirstInputPanel extends JPanel {
 	public RoundButton getGoToNext() {
 		return goToNext;
 	}
+
+	public TextField getNumberOfPeople() {
+		return numberOfPeople;
+	}
+
+	public TextField getNumberOfBranch() {
+		return numberOfBranch;
+	}
 }
