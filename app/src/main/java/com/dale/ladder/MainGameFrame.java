@@ -2,6 +2,8 @@ package com.dale.ladder;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
@@ -28,5 +30,12 @@ public class MainGameFrame extends JFrame {
 		
 		
 		this.add(firstInputPanel);
+	}
+	
+	class ToSetComponetPanel implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
 	}
 }

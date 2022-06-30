@@ -48,6 +48,7 @@ public class FirstInputPanel extends JPanel {
 		
 		numberOfPeople = new TextField();
 		numberOfBranch = new TextField();
+		
 		numberOfPeopleLabel.setAlignmentX(CENTER_ALIGNMENT);
 		numberOfPeopleLabel.setBounds(150, 15, 350, 50);
 		numberOfPeopleLabel.setFont(normalFont);
@@ -60,28 +61,39 @@ public class FirstInputPanel extends JPanel {
 					MyData.setPeopleNumber(Integer.parseInt(numberOfPeople.getText()));
 					isNumberInPeopel = true;
 					if(isNumberInBranch && isNumberInPeopel) {
-						goToNext.setColor("시작", getBackground())
+						goToNext.setColor("시작", new Color(61,205,91));
+						goToNext.setEnabled(true);
 					}
 				}catch (Exception e1) {
 //					e1.printStackTrace();
+					goToNext.setColor("시작", Color.GRAY);
+					goToNext.setEnabled(false);
 					isNumberInPeopel = false;
 				}
 			}
 			
 		});
 		
+		numberOfBranchLabel.setAlignmentX(CENTER_ALIGNMENT);
+		numberOfBranchLabel.setBounds(150, 125, 350, 50);
+		numberOfBranchLabel.setFont(normalFont);
+		numberOfBranch.setBounds(150, 170, 350, 50);
+		numberOfBranch.setFont(normalFont);
 		numberOfBranch.addTextListener(new TextListener() {
 			@Override
 			public void textValueChanged(TextEvent e) {
 				try {
-					MyData.setPeopleNumber(Integer.parseInt(numberOfBranch.getText()));
+					MyData.setBridgeNumber(Integer.parseInt(numberOfBranch.getText()));
 					isNumberInBranch = true;
 					if(isNumberInBranch && isNumberInPeopel) {
-						
+						goToNext.setColor("시작", new Color(61,205,91));
+						goToNext.setEnabled(true);
 					}
 				}catch (Exception e1) {
 //					e1.printStackTrace();
 					isNumberInPeopel = false;
+					goToNext.setColor("시작", Color.GRAY);
+					goToNext.setEnabled(false);
 				}
 			}
 			
@@ -89,6 +101,8 @@ public class FirstInputPanel extends JPanel {
 		
 		centerPanel.add(numberOfPeopleLabel);
 		centerPanel.add(numberOfPeople);
+		
+		centerPanel.add(numberOfBranchLabel);
 		centerPanel.add(numberOfBranch);
 		
 		
