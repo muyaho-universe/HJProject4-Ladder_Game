@@ -16,6 +16,7 @@ public class MainGameFrame extends JFrame {
 	}
 	
 	MainGameFrame(){
+		firstInputPanel = new FirstInputPanel();
 		setSize(1080, 504);
 		setTitle(TITLE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -24,7 +25,7 @@ public class MainGameFrame extends JFrame {
 	}
 	private void run() {
 		this.setVisible(true);
-		firstInputPanel = new FirstInputPanel();
+		
 		
 		this.add(firstInputPanel);
 	}
