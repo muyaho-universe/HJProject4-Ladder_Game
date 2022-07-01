@@ -25,8 +25,6 @@ public class GamePanel extends JPanel {
                  break;
               }
            }
-         
       }
-	    
 	}
 }

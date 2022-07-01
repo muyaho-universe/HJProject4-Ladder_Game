@@ -2,6 +2,7 @@ package com.dale.ladder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -30,6 +31,8 @@ public class SetComponent extends JPanel {
 	
 	private int i;
 	
+	private Font normalFont;
+	
 	private boolean isShowAll = false;
 	
 	public SetComponent(){
@@ -51,8 +54,10 @@ public class SetComponent extends JPanel {
 		enteredName = new String[MyData.getPeopleNumber()];
 		enteredTarget = new String[MyData.getPeopleNumber()];
 		results = new JLabel[MyData.getPeopleNumber()];
-		controlPanel.setLayout(null);
+		controlPanel.setLayout(new BoxLayout(controlPanel, WIDTH));
 		buttons = new RoundButton[MyData.getPeopleNumber()];
+		normalFont = new Font("",Font.BOLD, 180/MyData.getPeopleNumber());
+		
 		
 		for(i = 0; i< MyData.getPeopleNumber(); i++) {
 			names[i] = new JTextField();
@@ -110,8 +115,10 @@ public class SetComponent extends JPanel {
 				for(i = 0; i< MyData.getPeopleNumber(); i++) {
 					results[i] = new JLabel(MyData.peopleData.get(i) + " → " + MyData.targetData.get(i));
 					System.out.println(MyData.peopleData.get(i) + " → " + MyData.targetData.get(i));
-					results[i].setBounds(10, 10 + 5*i, 20, 4);
+					results[i].setSize(50, 30);
 					results[i].setVisible(false);
+					
+					results[i].setFont(normalFont);
 					results[i].setAlignmentX(CENTER_ALIGNMENT);
 					controlPanel.add(results[i]);
 				}
@@ -123,7 +130,7 @@ public class SetComponent extends JPanel {
 		});
 		
 		RoundButton showAll = new RoundButton("전체 보기");
-		showAll.setBounds(5,5, 40, 30);
+		showAll.setBounds(5,5, 100, 30);
 		showAll.setAlignmentX(CENTER_ALIGNMENT);
 		showAll.addActionListener(new ActionListener() {
 			@Override
@@ -132,14 +139,15 @@ public class SetComponent extends JPanel {
 					for(i = 0; i< MyData.getPeopleNumber(); i++) {
 						results[i].setVisible(false);
 					}
-					showAll.setColor("가리기", Color.GRAY);
+					showAll.setColor("전체보기", new Color(61,205,91));
 					isShowAll = false;
 				}
 				else {
 					for(i = 0; i< MyData.getPeopleNumber(); i++) {
 						results[i].setVisible(true);
 					}
-					showAll.setColor("전체보기", new Color(61,205,91));
+					showAll.setColor("가리기", Color.GRAY);
+					
 					isShowAll = true;
 				}
 			}
