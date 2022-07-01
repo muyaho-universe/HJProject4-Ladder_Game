@@ -38,6 +38,8 @@ public class MainGameFrame extends JFrame {
 	class ToSetComponetPanel implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			MyData.setOneWidth(720/(MyData.getPeopleNumber()));
+			MyData.setOneHeight(360/(MyData.getBridgeNumber()));
 			setComponentPanel.createPanel();
 			MainGameFrame.this.firstInputPanel.getNumberOfPeople().setText("");
 			MainGameFrame.this.firstInputPanel.getNumberOfBranch().setText("");

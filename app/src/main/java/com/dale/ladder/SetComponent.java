@@ -1,48 +1,60 @@
 package com.dale.ladder;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
 
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import com.dale.ladder.data.MyData;
 
 public class SetComponent extends JPanel {
-	String[] names = {"철수", "영희", "맹구", "대석", "야호"};
-	String[] targets = {"1000", "400", "500", "600", "9999"};
+	private JPanel gamePanel;
+	private JTextField[] names;
+	private JTextField[] targets;
+	private String[] enteredName;
+	private String[] enteredTarget;
+	
+	private int i;
+	
 	
 	public SetComponent(){
 		setBounds(0, 0, 1080, 504);
-		setLayout(new BorderLayout());
+		setLayout(null);
 //		createPanel();
 	}
 	
 	public void createPanel() {
-		int i;
-		for(i = 0; i <MyData.getPeopleNumber(); i++) {
-			MyData.peopleData.put(i, names[i]);
-			MyData.targetData.put(i, targets[i]);
-		}
-		Integer[] branches = new Integer[MyData.getBridgeNumber()];
+		gamePanel = new JPanel();
+		gamePanel.setBounds(50, 50, 720, 360);
 		
-		for(i= 0; i < MyData.getBridgeNumber(); i++) {
-			branches[i] = (int) (Math.random() * (MyData.getPeopleNumber()-1));
-			System.out.println("Origin: "+ MyData.peopleData.get(i) + " " + branches[i] + " "+ MyData.getPeopleNumber());
-		}
+		names= new JTextField[MyData.getPeopleNumber()];
+		targets= new JTextField[MyData.getPeopleNumber()];
+		enteredName = new String[MyData.getPeopleNumber()];
+		enteredTarget = new String[MyData.getPeopleNumber()];
 		
-		
-		
-		for(i = 0; i < MyData.getBridgeNumber(); i++) {
-			String temp1 = MyData.targetData.get(branches[i]);
-			String temp2 = MyData.targetData.get(branches[i]+1);
+		for(i = 0; i< MyData.getPeopleNumber(); i++) {
+			names[i] = new JTextField();
+			names[i].setBounds(i*MyData.getOneWidth()+ 50, 0, 50, 50);
 			
-			MyData.targetData.put(branches[i], temp2);
-			MyData.targetData.put(branches[i]+1, temp1);
+			targets[i] = new JTextField();
+			targets[i].setBounds(i*MyData.getOneWidth()+ 50, 410, 50, 50);
 			
+			this.add(names[i]);
+			this.add(targets[i]);
 		}
-		for(i= 0; i < MyData.getBridgeNumber(); i++) {
-			System.out.println("Change: "+ MyData.targetData.get(i));
-		}
-
+		gamePanel.setBackground(Color.WHITE);
+		this.add(gamePanel);
 	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+	    super.paintComponent(g); // 부모 페인트호출
+	    
+	    
+	}
+	
 	
 }
