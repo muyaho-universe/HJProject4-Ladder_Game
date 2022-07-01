@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -14,6 +16,7 @@ import javax.swing.event.CaretListener;
 
 import com.dale.ladder.button.RoundButton;
 import com.dale.ladder.data.MyData;
+import com.dale.ladder.data.PutData;
 
 public class SetComponent extends JPanel {
 	private JPanel blindPanel;
@@ -23,9 +26,12 @@ public class SetComponent extends JPanel {
 	private String[] enteredTarget;
 	private JLabel[] results;
 	private JPanel controlPanel;
+	private SingletracePanel[] singleTracePanel;
+	private SingletracePanel previousPanel;
 	
 	private RoundButton start;
 	private RoundButton[] buttons ;
+	private RoundButton showPanel;
 	
 	private GamePanel gamePanel;
 	
@@ -35,6 +41,9 @@ public class SetComponent extends JPanel {
 	
 	private boolean isShowAll = false;
 	
+	private ArrayList<PutData> arrayList  = new ArrayList<PutData>();
+	
+	private ArrayList<Integer> previousIndex = new ArrayList<Integer>();
 	public SetComponent(){
 		setBounds(0, 0, 1080, 504);
 		setLayout(null);
@@ -57,7 +66,7 @@ public class SetComponent extends JPanel {
 		controlPanel.setLayout(new BoxLayout(controlPanel, WIDTH));
 		buttons = new RoundButton[MyData.getPeopleNumber()];
 		normalFont = new Font("",Font.BOLD, 180/MyData.getPeopleNumber());
-		
+		singleTracePanel = new SingletracePanel[MyData.getPeopleNumber()];
 		
 		for(i = 0; i< MyData.getPeopleNumber(); i++) {
 			names[i] = new JTextField();
@@ -90,10 +99,10 @@ public class SetComponent extends JPanel {
 					gamePanel.repaint();
 					enteredName[i] = names[i].getText();
 					enteredTarget[i] = targets[i].getText();
-					System.out.println("enteredName[" +i+"]: " + enteredName[i] + " enteredTarget["+i+"]: " + enteredTarget[i]);
 					MyData.peopleData.put(i, enteredName[i]);
 					MyData.targetData.put(i, enteredTarget[i]);
-					
+					PutData putData = new PutData(i*MyData.getOneWidth()+25, buttons[i], i );
+					arrayList.add(putData);
 					SetComponent.this.blindPanel.setVisible(false);
 					SetComponent.this.start.setVisible(false);
 					SetComponent.this.add(gamePanel);
@@ -122,11 +131,45 @@ public class SetComponent extends JPanel {
 					results[i].setAlignmentX(CENTER_ALIGNMENT);
 					controlPanel.add(results[i]);
 				}
-//				controlPanel.setLayout(new BoxLayout(controlPanel));
+				
+				
 				controlPanel.setVisible(true);
 				
 				SetComponent.this.add(controlPanel);
+				
+				for(PutData p : arrayList) {
+					p.getButton().addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.setVisible(false);
+							if(!previousIndex.isEmpty()) {
+								singleTracePanel[previousIndex.get(previousIndex.size()-1)].setVisible(false);
+							}
+							singleTracePanel[p.getIndex()] = new SingletracePanel(p.getStartPoint(), 0, p.getIndex());
+							singleTracePanel[p.getIndex()].setVisible(true);
+							singleTracePanel[p.getIndex()].repaint();
+							singleTracePanel[p.getIndex()].setBounds(50, 50, 770, 360);
+							previousIndex.add(p.getIndex());
+							SetComponent.this.add(singleTracePanel[p.getIndex()]);
+						}
+					});
+				}
+				
 			}
+			
+		});
+		
+		showPanel = new RoundButton("결과창 보기");
+		showPanel.setBounds(850, 5, 60, 30);
+		showPanel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				gamePanel.setVisible(true);
+				
+			}
+			
 		});
 		
 		RoundButton showAll = new RoundButton("전체 보기");
@@ -158,6 +201,7 @@ public class SetComponent extends JPanel {
 		blindPanel.add(start);
 		controlPanel.setVisible(false);
 		blindPanel.setBackground(Color.WHITE);
+		this.add(showPanel);
 		this.add(blindPanel);
 		this.add(controlPanel);
 	}
