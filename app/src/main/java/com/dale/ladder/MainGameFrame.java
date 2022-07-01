@@ -14,6 +14,7 @@ public class MainGameFrame extends JFrame {
 	
 	private FirstInputPanel firstInputPanel;
 	private SetComponent setComponentPanel;
+	
 	public static void main(String[] args) {
 		MainGameFrame mainFrame = new MainGameFrame();
 		mainFrame.run();
@@ -22,6 +23,8 @@ public class MainGameFrame extends JFrame {
 	MainGameFrame(){
 		firstInputPanel = new FirstInputPanel();
 		setComponentPanel = new SetComponent();
+		
+		
 		setSize(1080, 504);
 		setTitle(TITLE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -38,15 +41,22 @@ public class MainGameFrame extends JFrame {
 	class ToSetComponetPanel implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			MyData.setOneWidth(720/(MyData.getPeopleNumber()));
-			MyData.setOneHeight(360/(MyData.getBridgeNumber()));
+			MyData.setOneWidth(720/(MyData.getPeopleNumber()-1));
+			MyData.setOneHeight(360/(MyData.getBridgeNumber()+1));
 			setComponentPanel.createPanel();
 			MainGameFrame.this.firstInputPanel.getNumberOfPeople().setText("");
 			MainGameFrame.this.firstInputPanel.getNumberOfBranch().setText("");
+			
+			MyData.branches =new Integer[MyData.getBridgeNumber()];
+			for(int i= 0; i < MyData.getBridgeNumber(); i++) {
+				MyData.branches[i] = (int) (Math.random() * (MyData.getPeopleNumber()-1));
+			}
+			
 			MainGameFrame.this.getContentPane().removeAll();
-			MainGameFrame.this.getContentPane().add(setComponentPanel);
 			revalidate();
 			repaint();
+			
+			MainGameFrame.this.getContentPane().add(setComponentPanel);
 		}
 	}
 }

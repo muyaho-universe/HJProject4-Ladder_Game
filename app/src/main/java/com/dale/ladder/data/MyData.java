@@ -7,6 +7,7 @@ public class MyData {
 	private static int bridgeNumber; // m
 	private static int oneWidth; // d
 	private static int oneHeight; // h
+	public static Integer[] branches;
 	
 	public static HashMap<Integer, String> peopleData = new HashMap<Integer, String>();
 	public static HashMap<Integer, String> targetData = new HashMap<Integer, String>();
@@ -34,5 +35,11 @@ public class MyData {
 	}
 	public static void setOneHeight(int oneHeight) {
 		MyData.oneHeight = oneHeight;
+	}
+	public static Integer[] getBranches() {
+		return branches;
+	}
+	public static void setBranches(Integer[] branches) {
+		MyData.branches = branches;
 	}
 }
