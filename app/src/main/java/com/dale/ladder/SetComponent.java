@@ -167,7 +167,7 @@ public class SetComponent extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				gamePanel.setVisible(true);
-				
+				previousIndex.clear();
 			}
 			
 		});

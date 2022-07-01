@@ -1,5 +1,6 @@
 package com.dale.ladder;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -24,6 +25,7 @@ public class SingletracePanel extends JPanel {
 	    Graphics2D g2dMain = (Graphics2D) g.create();
         g2d.setColor(Color.BLACK);
         g2dMain.setColor(Color.RED);
+        g2dMain.setStroke(new BasicStroke(7, BasicStroke.CAP_ROUND,0));
         for(int i=0; i<=770; i+=MyData.getOneWidth()) {
            g2d.drawLine(i+25, 0, i+25, 450);
         }
@@ -61,6 +63,8 @@ public class SingletracePanel extends JPanel {
     	   }
     	   g2dMain.drawLine(startX, startY, startX, startY+MyData.getOneHeight());
     	   startY += MyData.getOneHeight();
+    	   
        }
+       g2dMain.drawLine(startX, startY, startX, startY+MyData.getOneHeight());
 	}
 }
